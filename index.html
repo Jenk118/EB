@@ -1,0 +1,78 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .gradient-background {
+      background: linear-gradient(180deg, #ffdae0, #ffd6f6, #ffffff);
+    }
+    .bounce {
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body class="gradient-background flex items-center justify-center h-screen">
+  <div class="text-center">
+    <img id="imageDisplay" src="./images/couple1.gif" alt="Cute couple" class="rounded-md h-[300px] mx-auto" />
+    <h2 id="valentineQuestion" class="text-4xl font-bold text-pink-600 my-4">Will you be my Valentine?</h2>
+    <div id="responseButtons" class="flex gap-4 justify-center pt-4">
+      <button id="yesButton" class="bounce bg-green-500 text-white text-xl font-medium px-6 py-3 rounded-lg">Yes</button>
+      <button id="noButton" class="bg-red-500 text-white text-xl font-medium px-6 py-3 rounded-lg">No</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const imageDisplay = document.getElementById('imageDisplay');
+    const valentineQuestion = document.getElementById('valentineQuestion');
+    const responseButtons = document.getElementById('responseButtons');
+
+    let noClickCount = 0;
+    let yesButtonSize = 16;
+    let noButtonSize = 16;
+
+    const images = [
+      "./images/sad_couple1.gif",
+      "./images/sad_couple2.gif",
+      "./images/sad_couple3.gif",
+      "./images/sad_couple4.gif"
+    ];
+
+    const messages = [
+      "Are you sure? 😢",
+      "Pookie please... 🥺",
+      "You're breaking my heart 💔",
+      "How could you do this to me? 😭",
+      "I'm going to cry... 😭"
+    ];
+
+    noButton.addEventListener('click', () => {
+      if (noClickCount < messages.length) {
+        imageDisplay.src = images[noClickCount];
+        noButton.textContent = messages[noClickCount];
+        noClickCount++;
+      }
+      yesButtonSize += 20;
+      noButtonSize -= 2;
+      yesButton.style.fontSize = `${yesButtonSize}px`;
+      noButton.style.fontSize = `${noButtonSize}px`;
+    });
+
+    yesButton.addEventListener('click', () => {
+      imageDisplay.src = "./images/happy_couple.gif";
+      valentineQuestion.textContent = "Yayyy! ❤️";
+      responseButtons.style.display = 'none';
+      confetti();
+    });
+  </script>
+</body>
+</html>
